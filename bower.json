@@ -1,0 +1,26 @@
+{
+  "name": "scss-tooltips",
+  "version": "1.0.0",
+  "homepage": "https://github.com/dmtintner/UtilityBelt",
+  "authors": [
+    "David Tintner <dmtintner@gmail.com>"
+  ],
+  "description": "A lightweight set of mixins and silent classes for starting any project",
+  "main": "tooltips.scss",
+  "keywords": [
+    "sass",
+    "scss",
+    "tooltip",
+    "tooltips",
+    "css",
+    "mixin"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

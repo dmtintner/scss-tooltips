@@ -1,0 +1,162 @@
+/*
+* SCSS Tooltips
+* By David Tintner & Hacking UI
+* http://hackingui.com
+*
+* $direction: ne, nw, se, sw. relative to the element the tooltip is on
+* $bg-color: any CSS valid color string, will be applied as bg color of tooltip
+* Content for tooltip comes from data-tooltip attribute on element
+*/
+
+
+/*
+* Triangle
+* Copied from UtilityBelt- https://github.com/dmtintner/UtilityBelt
+*/
+@mixin triangle($direction, $size: 8px, $color: #222){
+  content: '';
+  display: block;
+  position: absolute;
+  height: 0; width: 0;
+  @if ($direction == 'up'){
+    border-bottom: $size solid $color;
+    border-left: $size solid transparent;
+    border-right: $size solid transparent;
+    border-top: none;
+  }
+  @else if ($direction == 'down'){
+    border-top: $size solid $color;
+    border-left: $size solid transparent;
+    border-right: $size solid transparent;
+    border-bottom: none;
+  }
+  @else if ($direction == 'left'){
+    border-top: $size solid transparent;
+    border-bottom: $size solid transparent;
+    border-right: $size solid $color;
+    border-left: none;
+  }
+  @else if ($direction == 'right'){
+    border-top: $size solid transparent;
+    border-bottom: $size solid transparent;
+    border-left: $size solid $color;
+    border-right: none;
+  }
+}
+
+
+/*
+* Respond To
+* Copied from UtilityBelt- https://github.com/dmtintner/UtilityBelt
+*/
+$smartphone: 480px;
+$tabletPortrait: 767px;
+$tabletLandscape: 1024px;
+$desktop: 1174px;
+$largeScreen: 1400px;
+@mixin respondTo($media) {
+  @if $media == smartphone {
+    @media (max-width: $smartphone) { @content; }
+  }
+  @else if $media == tablet {
+    @media (min-width: $tabletPortrait) and (max-width: $tabletLandscape) { @content; }
+  }
+  @else if $media == smallScreen {
+    @media (max-width: $desktop) { @content; }
+  }
+  @else if $media == desktop {
+    @media (min-width: $desktop) { @content; }
+  }
+}
+
+
+/*
+* Where the magic happens
+*/
+@mixin tooltip($direction: nw, $bg-color: #000, $title: false) {
+  // configuration variables
+  $triangle-size: 6px; // = height of triangle, width is 2x
+  $tooltip-width: 200px;
+  $fade: 300ms;
+  $white: #fff;
+  $black: #000;
+
+  position: relative; // can override this to absolute or fixed if necessary. Just can't be static
+
+  &:before, &:after {
+    opacity: 0;
+    z-index: 98;
+    @include transition(opacity $fade, visibility 0ms linear $fade); // delay visibility on fade out
+    pointer-events: none;
+    @include respondTo(smartphone){ display: none; }
+  }
+  &:before { // tooltip body
+    content: attr(data-tooltip);
+    position: absolute;
+    width: $tooltip-width;
+    padding: 10px 15px;
+    line-height: 18px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: normal;
+    white-space: normal;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    border-radius: 3px;
+    background-color: $bg-color;
+    @if lightness($bg-color) < 50% { // dynamically determine light or dark color based on $bg-color
+      color: $white;
+    } @else {
+      color: $black;
+    }
+  }
+  &:after { content: ''; } // tooltip carrot
+
+  // apply positioning to top and bottom values
+  @if $direction == 'nw' or $direction == 'ne' {
+    &:before {
+      top: -($triangle-size + 3px); bottom: auto; // override with auto in case this tooltip is overriding a previous instance in another direction
+      @include transform(translateY(-100%));
+    }
+    &:after {
+      @include triangle(down, $triangle-size, $bg-color);
+      top: -($triangle-size + 3px); bottom: auto;
+    }
+  }
+  @else if $direction == 'se' or $direction == 'sw' {
+    &:before {
+      bottom: -($triangle-size + 3px); top: auto; // extra 3px for spacing
+      @include transform(translateY(100%));
+    }
+    &:after {
+      @include triangle(up, $triangle-size, $bg-color);
+      bottom: -($triangle-size + 3px); top: auto;
+    }
+  }
+
+  // apply positioning to left and right values
+  @if $direction == 'ne' or $direction == 'se' {
+    &:before, &:after {
+      left: 50%; right: auto;
+      margin-left: -$triangle-size;
+    }
+    &:before { margin-left: -$triangle-size * 3; }
+  }
+  @else if $direction == 'nw' or $direction == 'sw' {
+    &:before, &:after {
+      right: 50%; left: auto;
+      margin-right: -$triangle-size;
+    }
+    &:before { margin-right: -$triangle-size * 3; }
+  }
+  @else { @warn 'direction not valid in tooltip mixin'; }
+
+
+  &:hover {
+    /* putting comment here so :hover is declared first by itself to fix ie10 bug with transitions on psuedo elements- http://css-tricks.com/pseudo-element-animationstransitions-bug-fixed-in-webkit/ */
+    &:before, &:after {
+      opacity: 1;
+      pointer-events: all;
+      @include transition-delay(0ms);
+    }
+  }
+}
