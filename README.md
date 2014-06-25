@@ -8,7 +8,9 @@ A Sass / SCSS mixin for tooltips. Pure CSS, no extra HTML elements, and no Javas
 How does it work?
 -----------
 Include it inside of a css selector and pass in your parameters:
-```@include tooltip($direction: ne, $bg-color: #000);```
+```
+@include tooltip($direction: ne, $bg-color: #000);
+```
 
 You can also configure the follwing variables inside:
 ```
