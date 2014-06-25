@@ -11,7 +11,7 @@
 
 /*
 * Triangle
-* Copied from UtilityBelt- https://github.com/dmtintner/UtilityBelt
+* not necessary if you're already using UtilityBelt- https://github.com/dmtintner/UtilityBelt
 */
 @mixin triangle($direction, $size: 8px, $color: #222){
   content: '';
@@ -46,8 +46,8 @@
 
 
 /*
-* Respond To
-* Copied from UtilityBelt- https://github.com/dmtintner/UtilityBelt
+* respondTo
+* not necessary if you're already using UtilityBelt- https://github.com/dmtintner/UtilityBelt
 */
 $smartphone: 480px;
 $tabletPortrait: 767px;
