@@ -1,7 +1,7 @@
 /*
 * SCSS Tooltips
 * By David Tintner & Hacking UI
-* http://hackingui.com
+* http://hackingui.com/front-end/scss-tooltips/
 *
 * $direction: ne, nw, se, sw. relative to the element the tooltip is on
 * $bg-color: any CSS valid color string, will be applied as bg color of tooltip
@@ -73,7 +73,7 @@ $largeScreen: 1400px;
 /*
 * Where the magic happens
 */
-@mixin tooltip($direction: nw, $bg-color: #000, $title: false) {
+@mixin tooltip($direction: ne, $bg-color: #000) {
   // configuration variables
   $triangle-size: 6px; // = height of triangle, width is 2x
   $tooltip-width: 200px;

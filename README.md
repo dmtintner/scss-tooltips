@@ -1,22 +1,30 @@
 SCSS Tooltips
 ===========
 
-A Sass / SCSS mixin for tooltips. Pure CSS, no Javascript required. 
+A Sass / SCSS mixin for tooltips. Pure CSS, no extra HTML elements, and no Javascript required. 
 
-[Documentation and examples](http://hackingui.com/front-end/10-best-scss-utilities/)
+[Documentation and examples](http://hackingui.com/front-end/scss-tooltips/)
 
 How does it work?
 -----------
+Include it inside of a css selector and pass in your parameters:
+`@include tooltip($direction: ne, $bg-color: #000);`
 
+You can also configure the follwing variables inside:
+`- $triangle-size // for the pointer
+ -  $tooltip-width
+ -  $fade // timing
+ -  $white // text colors
+ -  $black`
 
 See a Demo
 -----------
-[Demo on Hacking UI](http://hackingui.com/front-end/10-best-scss-utilities/)
+[Demo on Hacking UI](http://hackingui.com/front-end/scss-tooltips/)
 
 
 Download
 -----------
-[Download](http://hackingui.com/front-end/10-best-scss-utilities/) and add the utility-belt.scss file to your scss directory
+[Download](http://hackingui.com/front-end/scss-tooltips/) and add the tooltips.scss file to your SCSS directory
 
 Or install with Bower
 -----------
