@@ -11,11 +11,13 @@ Include it inside of a css selector and pass in your parameters:
 `@include tooltip($direction: ne, $bg-color: #000);`
 
 You can also configure the follwing variables inside:
-`- $triangle-size // for the pointer
- -  $tooltip-width
- -  $fade // timing
- -  $white // text colors
- -  $black`
+```
+- $triangle-size // for the pointer
+-  $tooltip-width
+-  $fade // timing
+-  $white // text colors
+-  $black
+```
 
 See a Demo
 -----------
