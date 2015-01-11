@@ -1,4 +1,4 @@
-@charset "IBM437";
+@charset "UTF-8";
 /*
 * SCSS Tooltips
 * By David Tintner & Hacking UI
@@ -45,37 +45,31 @@
     border-width: 3px;
     border-color: gold;
   }
-
   to {
     border-width: 0;
     border-color: rgba(255, 215, 0, 0.1);
   }
 }
-
 @-moz-keyframes alertMe {
   from {
     border-width: 3px;
     border-color: gold;
   }
-
   to {
     border-width: 0;
     border-color: rgba(255, 215, 0, 0.1);
   }
 }
-
 @keyframes alertMe {
   from {
     border-width: 3px;
     border-color: gold;
   }
-
   to {
     border-width: 0;
     border-color: rgba(255, 215, 0, 0.1);
   }
 }
-
 /*
 * Resize Sprite - for resizing only a single image from a sprite
 *
@@ -87,7 +81,7 @@
 */
 /*
 * Resizes all images in a given sprite
-* mixin courtesy of Wilker Lúcio https://gist.github.com/wilkerlucio/6442309
+* mixin courtesy of Wilker L├║cio https://gist.github.com/wilkerlucio/6442309
 * params: $only = if you want to list specific files instead of regenerating every image (ex. globe, checkmark)
 */
 /*
@@ -110,7 +104,7 @@ For perfectly aligned grids that don't rely on floating elements and difficult c
   transition: opacity 300ms, visibility 0ms linear 300ms;
   pointer-events: none;
 }
-@media (max-width: 480px) {
+@media (max-width: 568px) {
   .tooltip--ne:before, .tooltip--ne:after {
     display: none;
   }
@@ -128,7 +122,7 @@ For perfectly aligned grids that don't rely on floating elements and difficult c
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
   border-radius: 3px;
   background-color: #2c3e50;
-  color: white;
+  color: #fff;
 }
 .tooltip--ne:after {
   content: '';
@@ -167,6 +161,11 @@ For perfectly aligned grids that don't rely on floating elements and difficult c
   pointer-events: all;
   transition-delay: 0ms;
 }
+@media (max-width: 568px) {
+  .tooltip--ne:hover:before, .tooltip--ne:hover:after {
+    display: none;
+  }
+}
 
 .tooltip--nw {
   position: relative;
@@ -177,7 +176,7 @@ For perfectly aligned grids that don't rely on floating elements and difficult c
   transition: opacity 300ms, visibility 0ms linear 300ms;
   pointer-events: none;
 }
-@media (max-width: 480px) {
+@media (max-width: 568px) {
   .tooltip--nw:before, .tooltip--nw:after {
     display: none;
   }
@@ -195,7 +194,7 @@ For perfectly aligned grids that don't rely on floating elements and difficult c
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
   border-radius: 3px;
   background-color: #2c3e50;
-  color: white;
+  color: #fff;
 }
 .tooltip--nw:after {
   content: '';
@@ -234,6 +233,11 @@ For perfectly aligned grids that don't rely on floating elements and difficult c
   pointer-events: all;
   transition-delay: 0ms;
 }
+@media (max-width: 568px) {
+  .tooltip--nw:hover:before, .tooltip--nw:hover:after {
+    display: none;
+  }
+}
 
 .tooltip--se {
   position: relative;
@@ -244,7 +248,7 @@ For perfectly aligned grids that don't rely on floating elements and difficult c
   transition: opacity 300ms, visibility 0ms linear 300ms;
   pointer-events: none;
 }
-@media (max-width: 480px) {
+@media (max-width: 568px) {
   .tooltip--se:before, .tooltip--se:after {
     display: none;
   }
@@ -262,7 +266,7 @@ For perfectly aligned grids that don't rely on floating elements and difficult c
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
   border-radius: 3px;
   background-color: #2c3e50;
-  color: white;
+  color: #fff;
 }
 .tooltip--se:after {
   content: '';
@@ -301,6 +305,11 @@ For perfectly aligned grids that don't rely on floating elements and difficult c
   pointer-events: all;
   transition-delay: 0ms;
 }
+@media (max-width: 568px) {
+  .tooltip--se:hover:before, .tooltip--se:hover:after {
+    display: none;
+  }
+}
 
 .tooltip--sw {
   position: relative;
@@ -311,7 +320,7 @@ For perfectly aligned grids that don't rely on floating elements and difficult c
   transition: opacity 300ms, visibility 0ms linear 300ms;
   pointer-events: none;
 }
-@media (max-width: 480px) {
+@media (max-width: 568px) {
   .tooltip--sw:before, .tooltip--sw:after {
     display: none;
   }
@@ -329,7 +338,7 @@ For perfectly aligned grids that don't rely on floating elements and difficult c
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
   border-radius: 3px;
   background-color: #2c3e50;
-  color: white;
+  color: #fff;
 }
 .tooltip--sw:after {
   content: '';
@@ -367,4 +376,9 @@ For perfectly aligned grids that don't rely on floating elements and difficult c
   opacity: 1;
   pointer-events: all;
   transition-delay: 0ms;
+}
+@media (max-width: 568px) {
+  .tooltip--sw:hover:before, .tooltip--sw:hover:after {
+    display: none;
+  }
 }
