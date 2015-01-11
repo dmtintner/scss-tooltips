@@ -8,67 +8,8 @@
 * Content for tooltip comes from data-tooltip attribute on element
 */
 
-
-/*
-* Triangle
-* not necessary if you're already using UtilityBelt- https://github.com/dmtintner/UtilityBelt
-*/
-@mixin triangle($direction, $size: 8px, $color: #222){
-  content: '';
-  display: block;
-  position: absolute;
-  height: 0; width: 0;
-  @if ($direction == 'up'){
-    border-bottom: $size solid $color;
-    border-left: $size solid transparent;
-    border-right: $size solid transparent;
-    border-top: none;
-  }
-  @else if ($direction == 'down'){
-    border-top: $size solid $color;
-    border-left: $size solid transparent;
-    border-right: $size solid transparent;
-    border-bottom: none;
-  }
-  @else if ($direction == 'left'){
-    border-top: $size solid transparent;
-    border-bottom: $size solid transparent;
-    border-right: $size solid $color;
-    border-left: none;
-  }
-  @else if ($direction == 'right'){
-    border-top: $size solid transparent;
-    border-bottom: $size solid transparent;
-    border-left: $size solid $color;
-    border-right: none;
-  }
-}
-
-
-/*
-* respondTo
-* not necessary if you're already using UtilityBelt- https://github.com/dmtintner/UtilityBelt
-*/
-$smartphone: 480px;
-$tabletPortrait: 767px;
-$tabletLandscape: 1024px;
-$desktop: 1174px;
-$largeScreen: 1400px;
-@mixin respondTo($media) {
-  @if $media == smartphone {
-    @media (max-width: $smartphone) { @content; }
-  }
-  @else if $media == tablet {
-    @media (min-width: $tabletPortrait) and (max-width: $tabletLandscape) { @content; }
-  }
-  @else if $media == smallScreen {
-    @media (max-width: $desktop) { @content; }
-  }
-  @else if $media == desktop {
-    @media (min-width: $desktop) { @content; }
-  }
-}
-
+//dependencies
+@import 'vendor/utility-belt';
 
 /*
 * Where the magic happens
@@ -86,7 +27,7 @@ $largeScreen: 1400px;
   &:before, &:after {
     opacity: 0;
     z-index: 98;
-    @include transition(opacity $fade, visibility 0ms linear $fade); // delay visibility on fade out
+    transition: opacity $fade, visibility 0ms linear $fade; // delay visibility on fade out
     pointer-events: none;
     @include respondTo(smartphone){ display: none; }
   }
@@ -115,7 +56,7 @@ $largeScreen: 1400px;
   @if $direction == 'nw' or $direction == 'ne' {
     &:before {
       top: -($triangle-size + 3px); bottom: auto; // override with auto in case this tooltip is overriding a previous instance in another direction
-      @include transform(translateY(-100%));
+      transform: translateY(-100%);
     }
     &:after {
       @include triangle(down, $triangle-size, $bg-color);
@@ -125,7 +66,7 @@ $largeScreen: 1400px;
   @else if $direction == 'se' or $direction == 'sw' {
     &:before {
       bottom: -($triangle-size + 3px); top: auto; // extra 3px for spacing
-      @include transform(translateY(100%));
+      transform: translateY(100%);
     }
     &:after {
       @include triangle(up, $triangle-size, $bg-color);
@@ -156,7 +97,17 @@ $largeScreen: 1400px;
     &:before, &:after {
       opacity: 1;
       pointer-events: all;
-      @include transition-delay(0ms);
+      transition-delay : 0ms;
     }
   }
 }
+
+//*
+//* Ready to use CSS classes. Just define your default background color below
+//*
+
+$defaultBg: #2c3e50;
+.tooltip--ne { @include tooltip(ne, $defaultBg); }
+.tooltip--nw { @include tooltip(nw, $defaultBg); }
+.tooltip--se { @include tooltip(se, $defaultBg); }
+.tooltip--sw { @include tooltip(sw, $defaultBg); }

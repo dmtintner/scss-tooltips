@@ -1,0 +1,44 @@
+<html>
+<head>
+    <title>SCSS Tooltips | by Hacking UI</title>
+    <style>
+        .tooltip-holder {
+            text-align: center;
+            font-family: arial, helvetica, sans-serif;
+        }
+        h1 { color: #2c3e50; }
+        .info-icon {
+            display: inline-block;
+            height: 50px;
+            width: 50px;
+            margin: 0 10px 10px 0;
+            line-height: 50px;
+            font-size: 1.5em;
+            font-style: normal;
+            text-align: center;
+            border-radius: 50%;
+            background:  #2785C0;
+            color: #fff;
+        }
+    </style>
+    <link rel="stylesheet" href="tooltips.css"/>
+</head>
+<body>
+<!--
+    - Docs and demo at hackingui.com/front-end/scss-tooltips/
+    - Sign up for our weekly newsletter hackingui.com/sign-up
+    - or follow @hackingui on twitter for updates and more code demos
+-->
+    <div class="tooltip-holder">
+        <h1>SCSS Tooltips</h1>
+        <i class="info-icon tooltip--nw" data-tooltip-title="This is a CSS tooltip" data-tooltip="Me too!">nw</i>
+        <i class="info-icon tooltip--ne" data-tooltip="Hey I'm made with pure CSS">ne</i>
+        <br>
+        <i class="info-icon tooltip--sw" data-tooltip="They're bloating your code">sw</i>
+        <i class="info-icon tooltip--se" data-tooltip="Now stop using Javascript tooltips">se</i>
+        <h2>
+            <a href="http://hackingui.com/front-end/scss-tooltips/" target="_blank">Read all about this on HackingUI</a>
+        </h2>
+    </div>
+</body>
+</html>
