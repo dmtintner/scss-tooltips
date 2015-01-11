@@ -29,7 +29,7 @@
     z-index: 98;
     transition: opacity $fade, visibility 0ms linear $fade; // delay visibility on fade out
     pointer-events: none;
-    @include respondTo(smartphone){ display: none; }
+    @include respondTo(smartphone){ display: none !important; }
   }
   &:before { // tooltip body
     content: attr(data-tooltip);
