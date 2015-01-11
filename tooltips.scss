@@ -8,6 +8,9 @@
 * Content for tooltip comes from data-tooltip attribute on element
 */
 
+//dependencies
+@import 'vendor/utility-belt';
+
 /*
 * Where the magic happens
 */
@@ -98,3 +101,13 @@
     }
   }
 }
+
+//*
+//* Ready to use CSS classes. Just define your default background color below
+//*
+
+$defaultBg: #2c3e50;
+.tooltip--ne { @include tooltip(ne, $defaultBg); }
+.tooltip--nw { @include tooltip(nw, $defaultBg); }
+.tooltip--se { @include tooltip(se, $defaultBg); }
+.tooltip--sw { @include tooltip(sw, $defaultBg); }
