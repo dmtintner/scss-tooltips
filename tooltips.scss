@@ -14,6 +14,52 @@
 /*
 * Where the magic happens
 */
+$triangle-size: 6px; // = height of triangle, width is 2x
+@mixin tooltip-center($bg-color: $blue) {
+  &:before, &:after {
+    left: 50%;
+    margin-left: 0;
+  }
+  &:before {
+    transform: translate3d(-50%, -100%, 0);
+    margin-right: -$triangle-size * 3;
+  }
+}
+@mixin tooltip-down($bg-color: $blue) {
+  &:before {
+    bottom: -($triangle-size + 3px); top: auto; // extra 3px for spacing
+    transform: translateY(100%);
+  }
+  &:after {
+    @include triangle(up, $triangle-size, $bg-color);
+    bottom: -($triangle-size + 3px); top: auto;
+  }
+}
+@mixin tooltip-up($bg-color: $blue) {
+  &:before {
+    top: -($triangle-size + 3px); bottom: auto; // override with auto in case this tooltip is overriding a previous instance in another direction
+    transform: translateY(-100%);
+  }
+  &:after {
+    @include triangle(down, $triangle-size, $bg-color);
+    top: -($triangle-size + 3px); bottom: auto;
+  }
+}
+@mixin tooltip-left($bg-color: $blue) {
+  &:before, &:after {
+    right: 50%; left: auto;
+    margin-right: -$triangle-size;
+  }
+  &:before { margin-right: -$triangle-size * 3; }
+}
+@mixin tooltip-right($bg-color: $blue) {
+  &:before, &:after {
+    left: 50%; right: auto;
+    margin-left: -$triangle-size;
+  }
+  &:before { margin-left: -$triangle-size * 3; }
+}
+
 @mixin tooltip($direction: ne, $bg-color: #000) {
   // configuration variables
   $triangle-size: 6px; // = height of triangle, width is 2x
@@ -102,12 +148,8 @@
   }
 }
 
-//*
-//* Ready to use CSS classes. Just define your default background color below
-//*
-
-$defaultBg: #2c3e50;
-.tooltip--ne { @include tooltip(ne, $defaultBg); }
-.tooltip--nw { @include tooltip(nw, $defaultBg); }
-.tooltip--se { @include tooltip(se, $defaultBg); }
-.tooltip--sw { @include tooltip(sw, $defaultBg); }
+.tooltip { @include tooltip(); }
+.tooltip--up { @include tooltip-up(); }
+.tooltip--down { @include tooltip-down(); }
+.tooltip--left { @include tooltip-left(); }
+.tooltip--right { @include tooltip-right(); }
