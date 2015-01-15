@@ -14,7 +14,55 @@
 /*
 * Where the magic happens
 */
-@mixin tooltip($direction: ne, $bg-color: #000) {
+
+$blue: #0061c8;
+$triangle-size: 6px; // = height of triangle, width is 2x
+@mixin tooltip-center($bg-color: $blue) {
+  &:before, &:after {
+    left: 50%;
+    margin-left: 0;
+  }
+  &:before {
+    transform: translate3d(-50%, -100%, 0);
+    margin-right: -$triangle-size * 3;
+  }
+}
+@mixin tooltip-down($bg-color: $blue) {
+  &:before {
+    bottom: -($triangle-size + 3px); top: auto; // extra 3px for spacing
+    transform: translateY(100%);
+  }
+  &:after {
+    @include triangle(up, $triangle-size, $bg-color);
+    bottom: -($triangle-size + 3px); top: auto;
+  }
+}
+@mixin tooltip-up($bg-color: $blue) {
+  &:before {
+    top: -($triangle-size + 3px); bottom: auto; // override with auto in case this tooltip is overriding a previous instance in another direction
+    transform: translateY(-100%);
+  }
+  &:after {
+    @include triangle(down, $triangle-size, $bg-color);
+    top: -($triangle-size + 3px); bottom: auto;
+  }
+}
+@mixin tooltip-left($bg-color: $blue) {
+  &:before, &:after {
+    right: 50%; left: auto;
+    margin-right: -$triangle-size;
+  }
+  &:before { margin-right: -$triangle-size * 3; }
+}
+@mixin tooltip-right($bg-color: $blue) {
+  &:before, &:after {
+    left: 50%; right: auto;
+    margin-left: -$triangle-size;
+  }
+  &:before { margin-left: -$triangle-size * 3; }
+}
+
+@mixin tooltip($bg-color: $blue) {
   // configuration variables
   $triangle-size: 6px; // = height of triangle, width is 2x
   $tooltip-width: 200px;
@@ -52,45 +100,22 @@
   }
   &:after { content: ''; } // tooltip carrot
 
-  // apply positioning to top and bottom values
-  @if $direction == 'nw' or $direction == 'ne' {
-    &:before {
-      top: -($triangle-size + 3px); bottom: auto; // override with auto in case this tooltip is overriding a previous instance in another direction
-      transform: translateY(-100%);
-    }
-    &:after {
-      @include triangle(down, $triangle-size, $bg-color);
-      top: -($triangle-size + 3px); bottom: auto;
-    }
+  // apply positioning to top
+  &:before {
+    top: -($triangle-size + 3px); bottom: auto; // override with auto in case this tooltip is overriding a previous instance in another direction
+    transform: translateY(-100%);
+    margin-left: -$triangle-size * 3;
   }
-  @else if $direction == 'se' or $direction == 'sw' {
-    &:before {
-      bottom: -($triangle-size + 3px); top: auto; // extra 3px for spacing
-      transform: translateY(100%);
-    }
-    &:after {
-      @include triangle(up, $triangle-size, $bg-color);
-      bottom: -($triangle-size + 3px); top: auto;
-    }
+  &:after {
+    @include triangle(down, $triangle-size, $bg-color);
+    top: -($triangle-size + 3px); bottom: auto;
   }
 
-  // apply positioning to left and right values
-  @if $direction == 'ne' or $direction == 'se' {
-    &:before, &:after {
-      left: 50%; right: auto;
-      margin-left: -$triangle-size;
-    }
-    &:before { margin-left: -$triangle-size * 3; }
+  // apply positioning to right values
+  &:before, &:after {
+    left: 50%; right: auto;
+    margin-left: -$triangle-size;
   }
-  @else if $direction == 'nw' or $direction == 'sw' {
-    &:before, &:after {
-      right: 50%; left: auto;
-      margin-right: -$triangle-size;
-    }
-    &:before { margin-right: -$triangle-size * 3; }
-  }
-  @else { @warn 'direction not valid in tooltip mixin'; }
-
 
   &:hover {
     /* putting comment here so :hover is declared first by itself to fix ie10 bug with transitions on psuedo elements- http://css-tricks.com/pseudo-element-animationstransitions-bug-fixed-in-webkit/ */
@@ -102,13 +127,12 @@
     }
   }
 }
-
 //*
-//* Ready to use CSS classes. Just define your default background color below
+//* Ready to use CSS classes.
 //*
-
-$defaultBg: #2c3e50;
-.tooltip--ne { @include tooltip(ne, $defaultBg); }
-.tooltip--nw { @include tooltip(nw, $defaultBg); }
-.tooltip--se { @include tooltip(se, $defaultBg); }
-.tooltip--sw { @include tooltip(sw, $defaultBg); }
+.tooltip { @include tooltip(); }
+.tooltip--up { @include tooltip-up(); }
+.tooltip--down { @include tooltip-down(); }
+.tooltip--left { @include tooltip-left(); }
+.tooltip--right { @include tooltip-right(); }
+.tooltip--center { @include tooltip-center(); }
