@@ -101,21 +101,21 @@ For perfectly aligned grids that don't rely on floating elements and difficult c
 /*
 * Where the magic happens
 */
-.tooltip--ne {
+.tooltip {
   position: relative;
 }
-.tooltip--ne:before, .tooltip--ne:after {
+.tooltip:before, .tooltip:after {
   opacity: 0;
   z-index: 98;
   transition: opacity 300ms, visibility 0ms linear 300ms;
   pointer-events: none;
 }
 @media (max-width: 480px) {
-  .tooltip--ne:before, .tooltip--ne:after {
+  .tooltip:before, .tooltip:after {
     display: none;
   }
 }
-.tooltip--ne:before {
+.tooltip:before {
   content: attr(data-tooltip);
   position: absolute;
   width: 200px;
@@ -127,244 +127,111 @@ For perfectly aligned grids that don't rely on floating elements and difficult c
   white-space: normal;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
   border-radius: 3px;
-  background-color: #2c3e50;
+  background-color: #0061c8;
   color: white;
 }
-.tooltip--ne:after {
+.tooltip:after {
   content: '';
 }
-.tooltip--ne:before {
+.tooltip:before {
   top: -9px;
   bottom: auto;
   transform: translateY(-100%);
+  margin-left: -18px;
 }
-.tooltip--ne:after {
+.tooltip:after {
   content: '';
   display: block;
   position: absolute;
   height: 0;
   width: 0;
-  border-top: 6px solid #2c3e50;
+  border-top: 6px solid #0061c8;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
   border-bottom: none;
   top: -9px;
   bottom: auto;
 }
-.tooltip--ne:before, .tooltip--ne:after {
+.tooltip:before, .tooltip:after {
   left: 50%;
   right: auto;
   margin-left: -6px;
 }
-.tooltip--ne:before {
-  margin-left: -18px;
-}
-.tooltip--ne:hover {
+.tooltip:hover {
   /* putting comment here so :hover is declared first by itself to fix ie10 bug with transitions on psuedo elements- http://css-tricks.com/pseudo-element-animationstransitions-bug-fixed-in-webkit/ */
 }
-.tooltip--ne:hover:before, .tooltip--ne:hover:after {
+.tooltip:hover:before, .tooltip:hover:after {
   opacity: 1;
   pointer-events: all;
   transition-delay: 0ms;
 }
-
-.tooltip--nw {
-  position: relative;
-}
-.tooltip--nw:before, .tooltip--nw:after {
-  opacity: 0;
-  z-index: 98;
-  transition: opacity 300ms, visibility 0ms linear 300ms;
-  pointer-events: none;
-}
 @media (max-width: 480px) {
-  .tooltip--nw:before, .tooltip--nw:after {
+  .tooltip:hover:before, .tooltip:hover:after {
     display: none;
   }
 }
-.tooltip--nw:before {
-  content: attr(data-tooltip);
-  position: absolute;
-  width: 200px;
-  padding: 10px 15px;
-  line-height: 18px;
-  text-align: left;
-  font-size: 13px;
-  font-weight: normal;
-  white-space: normal;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-  border-radius: 3px;
-  background-color: #2c3e50;
-  color: white;
-}
-.tooltip--nw:after {
-  content: '';
-}
-.tooltip--nw:before {
+
+.tooltip--up:before {
   top: -9px;
   bottom: auto;
   transform: translateY(-100%);
 }
-.tooltip--nw:after {
+.tooltip--up:after {
   content: '';
   display: block;
   position: absolute;
   height: 0;
   width: 0;
-  border-top: 6px solid #2c3e50;
+  border-top: 6px solid #0061c8;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
   border-bottom: none;
   top: -9px;
   bottom: auto;
 }
-.tooltip--nw:before, .tooltip--nw:after {
-  right: 50%;
-  left: auto;
-  margin-right: -6px;
-}
-.tooltip--nw:before {
-  margin-right: -18px;
-}
-.tooltip--nw:hover {
-  /* putting comment here so :hover is declared first by itself to fix ie10 bug with transitions on psuedo elements- http://css-tricks.com/pseudo-element-animationstransitions-bug-fixed-in-webkit/ */
-}
-.tooltip--nw:hover:before, .tooltip--nw:hover:after {
-  opacity: 1;
-  pointer-events: all;
-  transition-delay: 0ms;
-}
 
-.tooltip--se {
-  position: relative;
-}
-.tooltip--se:before, .tooltip--se:after {
-  opacity: 0;
-  z-index: 98;
-  transition: opacity 300ms, visibility 0ms linear 300ms;
-  pointer-events: none;
-}
-@media (max-width: 480px) {
-  .tooltip--se:before, .tooltip--se:after {
-    display: none;
-  }
-}
-.tooltip--se:before {
-  content: attr(data-tooltip);
-  position: absolute;
-  width: 200px;
-  padding: 10px 15px;
-  line-height: 18px;
-  text-align: left;
-  font-size: 13px;
-  font-weight: normal;
-  white-space: normal;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-  border-radius: 3px;
-  background-color: #2c3e50;
-  color: white;
-}
-.tooltip--se:after {
-  content: '';
-}
-.tooltip--se:before {
+.tooltip--down:before {
   bottom: -9px;
   top: auto;
   transform: translateY(100%);
 }
-.tooltip--se:after {
+.tooltip--down:after {
   content: '';
   display: block;
   position: absolute;
   height: 0;
   width: 0;
-  border-bottom: 6px solid #2c3e50;
+  border-bottom: 6px solid #0061c8;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
   border-top: none;
   bottom: -9px;
   top: auto;
 }
-.tooltip--se:before, .tooltip--se:after {
+
+.tooltip--left:before, .tooltip--left:after {
+  right: 50%;
+  left: auto;
+  margin-right: -6px;
+}
+.tooltip--left:before {
+  margin-right: -18px;
+}
+
+.tooltip--right:before, .tooltip--right:after {
   left: 50%;
   right: auto;
   margin-left: -6px;
 }
-.tooltip--se:before {
+.tooltip--right:before {
   margin-left: -18px;
 }
-.tooltip--se:hover {
-  /* putting comment here so :hover is declared first by itself to fix ie10 bug with transitions on psuedo elements- http://css-tricks.com/pseudo-element-animationstransitions-bug-fixed-in-webkit/ */
-}
-.tooltip--se:hover:before, .tooltip--se:hover:after {
-  opacity: 1;
-  pointer-events: all;
-  transition-delay: 0ms;
-}
 
-.tooltip--sw {
-  position: relative;
+.tooltip--center:before, .tooltip--center:after {
+  left: 50%;
+  margin-left: 0;
 }
-.tooltip--sw:before, .tooltip--sw:after {
-  opacity: 0;
-  z-index: 98;
-  transition: opacity 300ms, visibility 0ms linear 300ms;
-  pointer-events: none;
-}
-@media (max-width: 480px) {
-  .tooltip--sw:before, .tooltip--sw:after {
-    display: none;
-  }
-}
-.tooltip--sw:before {
-  content: attr(data-tooltip);
-  position: absolute;
-  width: 200px;
-  padding: 10px 15px;
-  line-height: 18px;
-  text-align: left;
-  font-size: 13px;
-  font-weight: normal;
-  white-space: normal;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-  border-radius: 3px;
-  background-color: #2c3e50;
-  color: white;
-}
-.tooltip--sw:after {
-  content: '';
-}
-.tooltip--sw:before {
-  bottom: -9px;
-  top: auto;
-  transform: translateY(100%);
-}
-.tooltip--sw:after {
-  content: '';
-  display: block;
-  position: absolute;
-  height: 0;
-  width: 0;
-  border-bottom: 6px solid #2c3e50;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-top: none;
-  bottom: -9px;
-  top: auto;
-}
-.tooltip--sw:before, .tooltip--sw:after {
-  right: 50%;
-  left: auto;
-  margin-right: -6px;
-}
-.tooltip--sw:before {
+.tooltip--center:before {
+  transform: translate3d(-50%, -100%, 0);
   margin-right: -18px;
-}
-.tooltip--sw:hover {
-  /* putting comment here so :hover is declared first by itself to fix ie10 bug with transitions on psuedo elements- http://css-tricks.com/pseudo-element-animationstransitions-bug-fixed-in-webkit/ */
-}
-.tooltip--sw:hover:before, .tooltip--sw:hover:after {
-  opacity: 1;
-  pointer-events: all;
-  transition-delay: 0ms;
 }
