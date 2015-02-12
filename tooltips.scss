@@ -15,56 +15,65 @@
 * Where the magic happens
 */
 
-$blue: #0061c8;
-$triangle-size: 6px; // = height of triangle, width is 2x
-@mixin tooltip-center($bg-color: $blue) {
+$tooltip-background-color: #0061c8 !default;
+$tooltip-triangle-size: 6px !default; // = height of triangle, width is 2x
+$tooltip-data-attribute: 'data-tooltip' !default;
+$tooltip-class: 'tooltip' !default;
+$color: white;
+// set the color automatically based on the tooltip background
+@if lightness($tooltip-background-color) > 50% {
+  $color: black;
+}
+$tooltip-font-color: $color !default;
+
+@mixin tooltip-center() {
   &:before, &:after {
     left: 50%;
     margin-left: 0;
   }
   &:before {
     transform: translate3d(-50%, -100%, 0);
-    margin-right: -$triangle-size * 3;
+    margin-right: -$tooltip-triangle-size * 3;
   }
 }
-@mixin tooltip-down($bg-color: $blue) {
+@mixin tooltip-down() {
   &:before {
-    bottom: -($triangle-size + 3px); top: auto; // extra 3px for spacing
+    bottom: -($tooltip-triangle-size + 3px); top: auto; // extra 3px for spacing
     transform: translateY(100%);
   }
   &:after {
-    @include triangle(up, $triangle-size, $bg-color);
-    bottom: -($triangle-size + 3px); top: auto;
+    @include triangle(up, $tooltip-triangle-size, $tooltip-background-color);
+    bottom: -($tooltip-triangle-size + 3px); top: auto;
   }
 }
-@mixin tooltip-up($bg-color: $blue) {
+@mixin tooltip-up() {
   &:before {
-    top: -($triangle-size + 3px); bottom: auto; // override with auto in case this tooltip is overriding a previous instance in another direction
+    top: -($tooltip-triangle-size + 3px); bottom: auto; // override with auto in case this tooltip is overriding a previous instance in another direction
     transform: translateY(-100%);
   }
   &:after {
-    @include triangle(down, $triangle-size, $bg-color);
-    top: -($triangle-size + 3px); bottom: auto;
+    @include triangle(down, $tooltip-triangle-size, $tooltip-background-color);
+    top: -($tooltip-triangle-size + 3px); bottom: auto;
   }
 }
-@mixin tooltip-left($bg-color: $blue) {
+@mixin tooltip-left() {
   &:before, &:after {
     right: 50%; left: auto;
-    margin-right: -$triangle-size;
+    margin-right: -$tooltip-triangle-size;
   }
-  &:before { margin-right: -$triangle-size * 3; }
+  &:before { margin-right: -$tooltip-triangle-size * 3; }
 }
-@mixin tooltip-right($bg-color: $blue) {
+@mixin tooltip-right() {
   &:before, &:after {
     left: 50%; right: auto;
-    margin-left: -$triangle-size;
+    margin-left: -$tooltip-triangle-size;
   }
-  &:before { margin-left: -$triangle-size * 3; }
+  &:before { margin-left: -$tooltip-triangle-size * 3; }
 }
 
-@mixin tooltip($bg-color: $blue) {
+@mixin tooltip() {
   // configuration variables
-  $triangle-size: 6px; // = height of triangle, width is 2x
+  $tooltip-triangle-size: 6px; // = height of triangle, width is 2x
   $tooltip-width: 200px;
   $fade: 300ms;
   $white: #fff;
@@ -80,7 +89,7 @@ $triangle-size: 6px; // = height of triangle, width is 2x
     @include respondTo(smartphone){ display: none; }
   }
   &:before { // tooltip body
-    content: attr(data-tooltip);
+    content: attr(#{$tooltip-data-attribute});
     position: absolute;
     width: $tooltip-width;
     padding: 10px 15px;
@@ -91,30 +100,26 @@ $triangle-size: 6px; // = height of triangle, width is 2x
     white-space: normal;
     box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
     border-radius: 3px;
-    background-color: $bg-color;
-    @if lightness($bg-color) < 50% { // dynamically determine light or dark color based on $bg-color
-      color: $white;
-    } @else {
-      color: $black;
-    }
+    background-color: $tooltip-background-color;
+    color: $tooltip-font-color;
   }
   &:after { content: ''; } // tooltip carrot
 
   // apply positioning to top
   &:before {
-    top: -($triangle-size + 3px); bottom: auto; // override with auto in case this tooltip is overriding a previous instance in another direction
+    top: -($tooltip-triangle-size + 3px); bottom: auto; // override with auto in case this tooltip is overriding a previous instance in another direction
     transform: translateY(-100%);
-    margin-left: -$triangle-size * 3;
+    margin-left: -$tooltip-triangle-size * 3;
   }
   &:after {
-    @include triangle(down, $triangle-size, $bg-color);
-    top: -($triangle-size + 3px); bottom: auto;
+    @include triangle(down, $tooltip-triangle-size, $tooltip-background-color);
+    top: -($tooltip-triangle-size + 3px); bottom: auto;
   }
 
   // apply positioning to right values
   &:before, &:after {
     left: 50%; right: auto;
-    margin-left: -$triangle-size;
+    margin-left: -$tooltip-triangle-size;
   }
 
   &:hover {
@@ -130,9 +135,9 @@ $triangle-size: 6px; // = height of triangle, width is 2x
 //*
 //* Ready to use CSS classes.
 //*
-.tooltip { @include tooltip(); }
-.tooltip--up { @include tooltip-up(); }
-.tooltip--down { @include tooltip-down(); }
-.tooltip--left { @include tooltip-left(); }
-.tooltip--right { @include tooltip-right(); }
-.tooltip--center { @include tooltip-center(); }
+.#{$tooltip-class} { @include tooltip(); }
+.#{$tooltip-class}--up { @include tooltip-up(); }
+.#{$tooltip-class}--down { @include tooltip-down(); }
+.#{$tooltip-class}--left { @include tooltip-left(); }
+.#{$tooltip-class}--right { @include tooltip-right(); }
+.#{$tooltip-class}--center { @include tooltip-center(); }
