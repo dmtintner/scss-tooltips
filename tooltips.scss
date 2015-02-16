@@ -23,6 +23,8 @@ $tooltip-triangle-width: $tooltip-triangle-height * 2;
 $tooltip-data-attribute: 'data-tooltip' !default;
 $tooltip-class: 'tooltip' !default;
 $tooltip-background-color: #0061c8 !default;
+$tooltip-padding: 10px 15px !default;
+
 $color: white;
 // set the color automatically based on the tooltip background
 @if lightness($tooltip-background-color) > 50% {
@@ -115,7 +117,7 @@ $tooltip-arrow: '&:after';
     content: attr(#{$tooltip-data-attribute});
     position: absolute;
     width: $tooltip-width;
-    padding: 10px 15px;
+    padding: $tooltip-padding;
     line-height: 18px;
     text-align: left;
     font-size: 13px;
