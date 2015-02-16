@@ -12,13 +12,17 @@
 @import 'vendor/utility-belt';
 
 /*
-* Where the magic happens
+* Configuration
 */
-
-$tooltip-background-color: #0061c8 !default;
-$tooltip-triangle-size: 6px !default; // = height of triangle, width is 2x
+$tooltip-width: 200px !default;
+$tooltip-proximity: 3px !default;
+$fade-in-delay: 300ms !default;
+$fade-out-duration: 300ms !default;
+$tooltip-triangle-height: 6px !default;
+$tooltip-triangle-width: $tooltip-triangle-height * 2;
 $tooltip-data-attribute: 'data-tooltip' !default;
 $tooltip-class: 'tooltip' !default;
+$tooltip-background-color: #0061c8 !default;
 $color: white;
 // set the color automatically based on the tooltip background
 @if lightness($tooltip-background-color) > 50% {
@@ -26,65 +30,84 @@ $color: white;
 }
 $tooltip-font-color: $color !default;
 
-@mixin tooltip-center() {
-  &:before, &:after {
-    left: 50%;
-    margin-left: 0;
+
+
+// utility variables
+$tooltip-body: '&:before';
+$tooltip-arrow: '&:after';
+
+@mixin tooltip-position($positionX, $positionY, $translateX, $translateY) {
+  $positionXValue: 0;
+  $positionYValue: -($tooltip-triangle-height + $tooltip-proximity) ;
+  $trianglePositionXValue: 50%;
+  $trianglePositionYValue: $positionYValue;
+  $triangleDirection: down;
+
+  #{$tooltip-arrow} {
+    transform: translate3d(-50%, 0, 0);
+    @if ($positionX == 'right') {
+      transform: translate3d(50%, 0, 0);
+    }
   }
-  &:before {
-    transform: translate3d(-50%, -100%, 0);
-    margin-right: -$tooltip-triangle-size * 3;
+
+  // North direction
+  @if ($translateX == -50%) {
+    $positionXValue: 50%;
   }
-}
-@mixin tooltip-down() {
-  &:before {
-    bottom: -($tooltip-triangle-size + 3px); top: auto; // extra 3px for spacing
-    transform: translateY(100%);
+
+  // East-West direction
+  @if ($translateY == -50%) {
+    $positionXValue: -($tooltip-triangle-height + $tooltip-proximity);
+    $positionYValue: 50%;
+    $trianglePositionXValue: -$tooltip-proximity;
+    $trianglePositionYValue: 50%;
+    $triangleDirection: left;
+    @if ($translateX == -100%) {
+      $triangleDirection: right;
+    }
+    #{$tooltip-arrow} {
+      transform: translate3d(#{$translateX}, #{$translateY}, 0);
+    }
   }
-  &:after {
-    @include triangle(up, $tooltip-triangle-size, $tooltip-background-color);
-    bottom: -($tooltip-triangle-size + 3px); top: auto;
+
+  // South direction
+  @if ($translateY == 100%) {
+    $triangleDirection: up;
   }
-}
-@mixin tooltip-up() {
-  &:before {
-    top: -($tooltip-triangle-size + 3px); bottom: auto; // override with auto in case this tooltip is overriding a previous instance in another direction
-    transform: translateY(-100%);
+
+  $positionX-override: 'right';
+  @if ($positionX == 'right') {
+    $positionX-override: 'left';
   }
-  &:after {
-    @include triangle(down, $tooltip-triangle-size, $tooltip-background-color);
-    top: -($tooltip-triangle-size + 3px); bottom: auto;
+
+  $positionY-override: 'bottom';
+  @if ($positionY == 'bottom') {
+    $positionY-override: 'top';
   }
-}
-@mixin tooltip-left() {
-  &:before, &:after {
-    right: 50%; left: auto;
-    margin-right: -$tooltip-triangle-size;
+
+  #{$tooltip-body} {
+    #{$positionY}: $positionYValue;
+    #{$positionY-override}: auto;
+    #{$positionX}: $positionXValue;
+    #{$positionX-override}: auto;
+    transform: translate3d(#{$translateX}, #{$translateY}, 0);
   }
-  &:before { margin-right: -$tooltip-triangle-size * 3; }
-}
-@mixin tooltip-right() {
-  &:before, &:after {
-    left: 50%; right: auto;
-    margin-left: -$tooltip-triangle-size;
+  #{$tooltip-arrow} {
+    @include triangle($triangleDirection, $tooltip-triangle-height, $tooltip-background-color);
+    #{$positionY}: $trianglePositionYValue;
+    #{$positionY-override}: auto;
+    #{$positionX}: $trianglePositionXValue;
+    #{$positionX-override}: auto;
   }
-  &:before { margin-left: -$tooltip-triangle-size * 3; }
 }
 
 @mixin tooltip() {
-  // configuration variables
-  $tooltip-triangle-size: 6px; // = height of triangle, width is 2x
-  $tooltip-width: 200px;
-  $fade: 300ms;
-  $white: #fff;
-  $black: #000;
-
   position: relative; // can override this to absolute or fixed if necessary. Just can't be static
 
   &:before, &:after {
     opacity: 0;
     z-index: 98;
-    transition: opacity $fade, visibility 0ms linear $fade; // delay visibility on fade out
+    transition: opacity $fade-out-duration, visibility 0ms linear $fade-out-duration; // delay visibility on fade out
     pointer-events: none;
     @include respondTo(smartphone){ display: none; }
   }
@@ -105,39 +128,26 @@ $tooltip-font-color: $color !default;
   }
   &:after { content: ''; } // tooltip carrot
 
-  // apply positioning to top
-  &:before {
-    top: -($tooltip-triangle-size + 3px); bottom: auto; // override with auto in case this tooltip is overriding a previous instance in another direction
-    transform: translateY(-100%);
-    margin-left: -$tooltip-triangle-size * 3;
-  }
-  &:after {
-    @include triangle(down, $tooltip-triangle-size, $tooltip-background-color);
-    top: -($tooltip-triangle-size + 3px); bottom: auto;
-  }
-
-  // apply positioning to right values
-  &:before, &:after {
-    left: 50%; right: auto;
-    margin-left: -$tooltip-triangle-size;
-  }
-
   &:hover {
     /* putting comment here so :hover is declared first by itself to fix ie10 bug with transitions on psuedo elements- http://css-tricks.com/pseudo-element-animationstransitions-bug-fixed-in-webkit/ */
     &:before, &:after {
       opacity: 1;
       pointer-events: all;
-      transition-delay : 0ms;
+      transition-delay : $fade-in-delay;
       @include respondTo(smartphone){ display: none; }
     }
   }
 }
+
 //*
 //* Ready to use CSS classes.
 //*
 .#{$tooltip-class} { @include tooltip(); }
-.#{$tooltip-class}--up { @include tooltip-up(); }
-.#{$tooltip-class}--down { @include tooltip-down(); }
-.#{$tooltip-class}--left { @include tooltip-left(); }
-.#{$tooltip-class}--right { @include tooltip-right(); }
-.#{$tooltip-class}--center { @include tooltip-center(); }
+.#{$tooltip-class}--ne { @include tooltip-position(left, top, 0, -100%); }
+.#{$tooltip-class}--n { @include tooltip-position(left, top, -50%, -100%); }
+.#{$tooltip-class}--nw { @include tooltip-position(right, top, 0, -100%); }
+.#{$tooltip-class}--w { @include tooltip-position(left, top, -100%, -50%); }
+.#{$tooltip-class}--e { @include tooltip-position(right, top, 100%, -50%); }
+.#{$tooltip-class}--se { @include tooltip-position(left, bottom, 0, 100%); }
+.#{$tooltip-class}--s { @include tooltip-position(left, bottom, -50%, 100%); }
+.#{$tooltip-class}--sw { @include tooltip-position(right, bottom, 0, 100%); }
