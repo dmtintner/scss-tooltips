@@ -1,6 +1,6 @@
 {
   "name": "scss-tooltips",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "homepage": "https://github.com/dmtintner/scss-tooltips",
   "authors": [
     "David Tintner <dmtintner@gmail.com>"
@@ -17,7 +17,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "UtilityBelt": "~1.1.0"
+    "UtilityBelt": "~1.2.0"
   },
   "ignore": [
     "**/.*",
