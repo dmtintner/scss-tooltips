@@ -8,7 +8,7 @@
   "description": "0 element, CSS Tooltips in a single SCSS / Sass mixin",
   "main": "tooltips.scss",
   "dependencies": {
-    "UtilityBelt": "~1.4.0"
+    "UtilityBelt": "~1.2.0"
   },
   "keywords": [
     "sass",
