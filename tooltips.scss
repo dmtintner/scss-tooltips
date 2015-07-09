@@ -9,38 +9,26 @@
 */
 
 //dependencies
-@import 'vendor/utility-belt';
+@import 'utility-belt';
 
-/*
-* Configuration
-*/
-$tooltip-width: 200px !default;
-$tooltip-proximity: 3px !default;
-$fade-in-delay: 300ms !default;
-$fade-out-duration: 300ms !default;
-$tooltip-triangle-height: 6px !default;
-$tooltip-triangle-width: $tooltip-triangle-height * 2;
-$tooltip-data-attribute: 'data-tooltip' !default;
-$tooltip-class: 'tooltip' !default;
-$tooltip-background-color: #0061c8 !default;
-$tooltip-padding: 10px 15px !default;
+@mixin tooltip-position($positionX,
+$positionY,
+$translateX,
+$translateY,
+$tooltip-background-color-param: #0061c8,
+$tooltip-proximity-param: 3px) {
 
-$color: white;
-// set the color automatically based on the tooltip background
-@if lightness($tooltip-background-color) > 50% {
-  $color: black;
-}
-$tooltip-font-color: $color !default;
+  $tooltip-background-color: $tooltip-background-color-param;
+  // utility variables
+  $tooltip-body: '&:before';
+  $tooltip-arrow: '&:after';
+  // config variables
+  $tooltip-triangle-height: 6px !default;
+  $tooltip-triangle-width: $tooltip-triangle-height * 2;
+  $tooltip-proximity: $tooltip-proximity-param;
 
-
-
-// utility variables
-$tooltip-body: '&:before';
-$tooltip-arrow: '&:after';
-
-@mixin tooltip-position($positionX, $positionY, $translateX, $translateY) {
   $positionXValue: 0;
-  $positionYValue: -($tooltip-triangle-height + $tooltip-proximity) ;
+  $positionYValue: -($tooltip-triangle-height + $tooltip-proximity);
   $trianglePositionXValue: 50%;
   $trianglePositionYValue: $positionYValue;
   $triangleDirection: down;
@@ -103,7 +91,31 @@ $tooltip-arrow: '&:after';
   }
 }
 
-@mixin tooltip() {
+@mixin tooltip( $tooltip-data-attribute-param: 'data-tooltip',
+                $tooltip-width-param: 200px,
+                $tooltip-class-param: 'tooltip',
+                $tooltip-background-color-param: #0061c8,
+                $tooltip-font-color-param: white,
+                $fade-out-duration-param: 300ms,
+                $fade-in-delay-param: 300ms,
+                $tooltip-padding-param: 10px 15px
+) {
+  //config
+  $tooltip-data-attribute: $tooltip-data-attribute-param;
+  $tooltip-width: $tooltip-width-param;
+  $tooltip-class: $tooltip-class-param;
+  $tooltip-background-color: $tooltip-background-color-param;
+  $fade-out-duration: $fade-out-duration-param;
+  $fade-in-delay: $fade-in-delay-param;
+  $tooltip-padding: $tooltip-padding-param;
+
+  // set the color automatically based on the tooltip background
+  @if lightness($tooltip-background-color) > 50% {
+    $tooltip-font-color: black;
+  }
+  //param font-color override
+  $tooltip-font-color: $tooltip-font-color-param;
+
   position: relative; // can override this to absolute or fixed if necessary. Just can't be static
 
   &:before, &:after {
@@ -111,9 +123,12 @@ $tooltip-arrow: '&:after';
     z-index: 98;
     transition: opacity $fade-out-duration, visibility 0ms linear $fade-out-duration; // delay visibility on fade out
     pointer-events: none;
-    @include respondTo(smartphone){ display: none; }
+    @include respondTo(smartphone) {
+      display: none;
+    }
   }
-  &:before { // tooltip body
+  &:before {
+    // tooltip body
     content: attr(#{$tooltip-data-attribute});
     position: absolute;
     width: $tooltip-width;
@@ -123,33 +138,26 @@ $tooltip-arrow: '&:after';
     font-size: 13px;
     font-weight: normal;
     white-space: normal;
-    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
     border-radius: 3px;
     background-color: $tooltip-background-color;
     color: $tooltip-font-color;
   }
-  &:after { content: ''; } // tooltip carrot
+  &:after {
+    content: '';
+  }
+  // tooltip carrot
 
   &:hover {
-    /* putting comment here so :hover is declared first by itself to fix ie10 bug with transitions on psuedo elements- http://css-tricks.com/pseudo-element-animationstransitions-bug-fixed-in-webkit/ */
+    /* putting comment here so :hover is declared first by itself to fix ie10 bug with transitions on pseudo elements
+    - http://css-tricks.com/pseudo-element-animationstransitions-bug-fixed-in-webkit/ */
     &:before, &:after {
       opacity: 1;
       pointer-events: all;
-      transition-delay : $fade-in-delay;
-      @include respondTo(smartphone){ display: none; }
+      transition-delay: $fade-in-delay;
+      @include respondTo(smartphone) {
+        display: none;
+      }
     }
   }
 }
-
-//*
-//* Ready to use CSS classes.
-//*
-.#{$tooltip-class} { @include tooltip(); }
-.#{$tooltip-class}--ne { @include tooltip-position(left, top, 0, -100%); }
-.#{$tooltip-class}--n { @include tooltip-position(left, top, -50%, -100%); }
-.#{$tooltip-class}--nw { @include tooltip-position(right, top, 0, -100%); }
-.#{$tooltip-class}--w { @include tooltip-position(left, top, -100%, -50%); }
-.#{$tooltip-class}--e { @include tooltip-position(right, top, 100%, -50%); }
-.#{$tooltip-class}--se { @include tooltip-position(left, bottom, 0, 100%); }
-.#{$tooltip-class}--s { @include tooltip-position(left, bottom, -50%, 100%); }
-.#{$tooltip-class}--sw { @include tooltip-position(right, bottom, 0, 100%); }
