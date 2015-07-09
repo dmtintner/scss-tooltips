@@ -24,45 +24,45 @@ Example Setup
 
 Configuration Options
 -----------
-The following options are available to configure the tooltip, with their default values shown below. Rather than directly changing the variables in this file, override them in your own code by simply declaring them with the values you would like.
+The following options are available to configure the tooltip, with their default values shown below. Rather than directly changing the variables in this file, override them in your own code by simply assigning them with the values you would like as parameters to the tooltip mixin.
 
 Width
 ```
-$tooltip-width: 200px !default;
+$tooltip-width-param: 200px;
 ```
 Distance from Element
 ```
-$tooltip-proximity: 3px !default;
+$tooltip-proximity-param: 3px;
 ```
 Fade in delay
 ```
-$fade-in-delay: 300ms !default;
+$fade-in-delay-param: 300ms;
 ```
 Fade out delay
 ```
-$fade-out-duration: 300ms !default;
-```
-Triangle height
-```
-$tooltip-triangle-height: 6px !default;
+$fade-out-duration-param: 300ms;
 ```
 Content data attribute name
 ```
-$tooltip-data-attribute: 'data-tooltip' !default;
+$tooltip-data-attribute-param: 'data-tooltip';
 ```
 Tooltip class name
 ```
-$tooltip-class: 'tooltip' !default;
+$tooltip-class-param: 'tooltip';
 ```
 Tooltip Background color
 ```
-$tooltip-background-color: #0061c8 !default;
+$tooltip-background-color-param: #0061c8;
 ```
 Tooltip padding
 ```
-$tooltip-padding: 10px 15px !default;
+$tooltip-padding-param: 10px 15px;
 ```
 
+Triangle height (not exposed as a param)
+```
+$tooltip-triangle-height: 6px !default;
+```
 See a Demo
 -----------
 [Demo on Hacking UI](http://hackingui.com/front-end/scss-tooltips/)
