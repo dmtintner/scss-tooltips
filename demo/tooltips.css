@@ -12,7 +12,7 @@
 * UtilityBelt - a starter kit for any SASS project
 * By @dmtintner & @hackingui
 * Documentation and examples - hackingui.com/front-end/10-best-scss-utilities/
-* V1.1.0
+* V1.2.0
 */
 /*
 ## Triangle
@@ -33,33 +33,9 @@
 */
 /*
 * Truncate Text
+the mixin is used for shortening long captions
+overflowing text is replaced by "..."
 */
-/*
-* Animation
-*/
-/*
-* Alerted
-*/
-@-webkit-keyframes alertMe {
-  from {
-    border-width: 3px;
-    border-color: gold;
-  }
-  to {
-    border-width: 0;
-    border-color: rgba(255, 215, 0, 0.1);
-  }
-}
-@-moz-keyframes alertMe {
-  from {
-    border-width: 3px;
-    border-color: gold;
-  }
-  to {
-    border-width: 0;
-    border-color: rgba(255, 215, 0, 0.1);
-  }
-}
 @keyframes alertMe {
   from {
     border-width: 3px;
@@ -85,15 +61,12 @@
 * params: $only = if you want to list specific files instead of regenerating every image (ex. globe, checkmark)
 */
 /*
-* HUI Tooltips
-*/
-/*
 ## Text-align justify
 For perfectly aligned grids that don't rely on floating elements and difficult calculations
 
 - http://www.barrelny.com/blog/text-align-justify-and-rwd/ */
 /*
-* Configuration
+## Placeholder Color - for styling input placeholders in every browser
 */
 .tooltip {
   position: relative;
@@ -128,7 +101,8 @@ For perfectly aligned grids that don't rely on floating elements and difficult c
   content: '';
 }
 .tooltip:hover {
-  /* putting comment here so :hover is declared first by itself to fix ie10 bug with transitions on psuedo elements- http://css-tricks.com/pseudo-element-animationstransitions-bug-fixed-in-webkit/ */
+  /* putting comment here so :hover is declared first by itself to fix ie10 bug with transitions on pseudo elements
+  - http://css-tricks.com/pseudo-element-animationstransitions-bug-fixed-in-webkit/ */
 }
 .tooltip:hover:before, .tooltip:hover:after {
   opacity: 1;
