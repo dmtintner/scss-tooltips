@@ -1,0 +1,15 @@
+//*
+//* tooltip classes.
+//*
+
+$tooltip-class:'tooltip';
+
+.#{$tooltip-class} { @include tooltip(); }
+.#{$tooltip-class}--ne { @include tooltip-position(left, top, 0, -100%); }
+.#{$tooltip-class}--n { @include tooltip-position(left, top, -50%, -100%); }
+.#{$tooltip-class}--nw { @include tooltip-position(right, top, 0, -100%); }
+.#{$tooltip-class}--w { @include tooltip-position(left, top, -100%, -50%); }
+.#{$tooltip-class}--e { @include tooltip-position(right, top, 100%, -50%); }
+.#{$tooltip-class}--se { @include tooltip-position(left, bottom, 0, 100%); }
+.#{$tooltip-class}--s { @include tooltip-position(left, bottom, -50%, 100%); }
+.#{$tooltip-class}--sw { @include tooltip-position(right, bottom, 0, 100%); }
