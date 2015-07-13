@@ -29,6 +29,7 @@ Configuration Options
 The following options are available to configure the tooltip, with their default values shown below. Rather than directly changing the variables in this file, override them in your own code by simply assigning them with the values you would like as parameters to the tooltip mixin.
 
 *tooltip* mixin params:
+
 Width
 ```
 $tooltip-width: 200px;
@@ -64,6 +65,7 @@ $tooltip-triangle-height: 6px !default;
 ```
 
 *tooltipPositioningFactory* mixin params:
+
 Distance from Element
 ```
 $tooltip-proximity: 3px;
