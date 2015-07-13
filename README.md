@@ -7,6 +7,8 @@ A Sass / SCSS mixin for tooltips. Pure CSS, no extra HTML elements, and no Javas
 
 How Do You Use it?
 -----------
+As seen in demo.scss you can define your class for the `tooltip` with default or overridden values as params in the *tooltip* mixin.
+Then use the *tooltipPositioningFactory* to create the positioning classes 
 Just add the class `tooltip` to the element that you want to hover over and display the tooltip.
 
 Then add the data attribute `data-tooltip` to the element and provide whatever text you would like the tooltip to say inside of it.
@@ -26,42 +28,49 @@ Configuration Options
 -----------
 The following options are available to configure the tooltip, with their default values shown below. Rather than directly changing the variables in this file, override them in your own code by simply assigning them with the values you would like as parameters to the tooltip mixin.
 
+*tooltip* mixin params:
 Width
 ```
-$tooltip-width-param: 200px;
-```
-Distance from Element
-```
-$tooltip-proximity-param: 3px;
+$tooltip-width: 200px;
 ```
 Fade in delay
 ```
-$fade-in-delay-param: 300ms;
+$fade-in-delay: 300ms;
 ```
 Fade out delay
 ```
-$fade-out-duration-param: 300ms;
+$fade-out-duration: 300ms;
 ```
 Content data attribute name
 ```
-$tooltip-data-attribute-param: 'data-tooltip';
+$tooltip-data-attribute: 'data-tooltip';
 ```
 Tooltip class name
 ```
-$tooltip-class-param: 'tooltip';
+$tooltip-class: 'tooltip';
 ```
 Tooltip Background color
 ```
-$tooltip-background-color-param: #0061c8;
+$tooltip-background-color: #0061c8;
 ```
 Tooltip padding
 ```
-$tooltip-padding-param: 10px 15px;
+$tooltip-padding: 10px 15px;
 ```
 
 Triangle height (not exposed as a param)
 ```
 $tooltip-triangle-height: 6px !default;
+```
+
+*tooltipPositioningFactory* mixin params:
+Distance from Element
+```
+$tooltip-proximity: 3px;
+```
+Tooltip class name
+```
+$tooltip-class: 'tooltip';
 ```
 See a Demo
 -----------
@@ -70,7 +79,7 @@ See a Demo
 
 Download
 -----------
-[Download](http://hackingui.com/front-end/scss-tooltips/) and add the tooltips.scss file to your SCSS directory
+[Download](http://hackingui.com/front-end/scss-tooltips/) and add the source/tooltips.scss file to your SCSS directory 
 
 Or install with Bower
 -----------

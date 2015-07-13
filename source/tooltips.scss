@@ -9,13 +9,12 @@
 */
 
 //dependencies
-@import 'bower_components/UtilityBelt/utility-belt';
+@import '../bower_components/UtilityBelt/utility-belt';
 
 @mixin tooltip-position($positionX,
                         $positionY,
                         $translateX,
                         $translateY,
-                        $tooltip-background-color: #0061c8,
                         $tooltip-proximity: 3px) {
 
   // utility variables
@@ -81,7 +80,7 @@
     transform: translate3d(#{$translateX}, #{$translateY}, 0);
   }
   #{$tooltip-arrow} {
-    @include triangle($triangleDirection, $tooltip-triangle-height, $tooltip-background-color);
+    @include triangle($triangleDirection, $tooltip-triangle-height, currentColor);
     #{$positionY}: $trianglePositionYValue;
     #{$positionY-override}: auto;
     #{$positionX}: $trianglePositionXValue;
@@ -89,18 +88,19 @@
   }
 }
 
+$tooltip-font-color-default : white !default;
 @mixin tooltip( $tooltip-data-attribute: 'data-tooltip',
                 $tooltip-width: 200px,
                 $tooltip-class: 'tooltip',
                 $tooltip-background-color: #0061c8,
-                $tooltip-font-color: white,
+                $tooltip-font-color: $tooltip-font-color-default,
                 $fade-out-duration: 300ms,
                 $fade-in-delay: 300ms,
                 $tooltip-padding: 10px 15px
 ) {
   //config
   // set the color automatically based on the tooltip background
-  @if lightness($tooltip-background-color) > 50% and not($tooltip-font-color == white) {
+  @if lightness($tooltip-background-color) > 50% and not($tooltip-font-color == $tooltip-font-color-default) {
     $tooltip-font-color: black;
   }
 
@@ -112,7 +112,7 @@
     transition: opacity $fade-out-duration, visibility 0ms linear $fade-out-duration; // delay visibility on fade out
     pointer-events: none;
     @include respondTo(smartphone) {
-      display: none;
+      display: none; // tooltips are not yet mobile friendly, so we are just hiding them
     }
   }
   &:before {
@@ -132,9 +132,10 @@
     color: $tooltip-font-color;
   }
   &:after {
+    // tooltip carrot
     content: '';
+    color: $tooltip-background-color; // is for border-color to inherit using currentColor value
   }
-  // tooltip carrot
 
   &:hover {
     /* putting comment here so :hover is declared first by itself to fix ie10 bug with transitions on pseudo elements
@@ -152,57 +153,36 @@
 //*
 //* tooltip classes.
 //*
-@mixin tooltipFactory(
-                $tooltip-data-attribute: 'data-tooltip',
-                $tooltip-width: 200px,
-                $tooltip-class: 'tooltip',
-                $tooltip-background-color: #0061c8,
-                $tooltip-font-color: white,
-                $fade-out-duration: 300ms,
-                $fade-in-delay: 300ms,
-                $tooltip-padding: 10px 15px,
-                $tooltip-proximity: 3px) {
-  .#{$tooltip-class} {
-    @include tooltip(
-                $tooltip-data-attribute,
-                $tooltip-width,
-                $tooltip-class,
-                $tooltip-background-color,
-                $tooltip-font-color,
-                $fade-out-duration,
-                $fade-in-delay);
-  }
 
+@mixin tooltipPositioningFactory($tooltip-class: 'tooltip', $tooltip-proximity: 3px ){
   .#{$tooltip-class}--ne {
-    @include tooltip-position(left, top, 0, -100%, $tooltip-background-color, $tooltip-proximity);
+    @include tooltip-position(left, top, 0, -100%, $tooltip-proximity);
   }
 
   .#{$tooltip-class}--n {
-    @include tooltip-position(left, top, -50%, -100%, $tooltip-background-color, $tooltip-proximity);
+    @include tooltip-position(left, top, -50%, -100%, $tooltip-proximity);
   }
 
   .#{$tooltip-class}--nw {
-    @include tooltip-position(right, top, 0, -100%, $tooltip-background-color, $tooltip-proximity);
+    @include tooltip-position(right, top, 0, -100%, $tooltip-proximity);
   }
 
   .#{$tooltip-class}--w {
-    @include tooltip-position(left, top, -100%, -50%, $tooltip-background-color, $tooltip-proximity);
+    @include tooltip-position(left, top, -100%, -50%, $tooltip-proximity);
   }
 
   .#{$tooltip-class}--e {
-    @include tooltip-position(right, top, 100%, -50%, $tooltip-background-color, $tooltip-proximity);
+    @include tooltip-position(right, top, 100%, -50%, $tooltip-proximity);
   }
 
   .#{$tooltip-class}--se {
-    @include tooltip-position(left, bottom, 0, 100%, $tooltip-background-color, $tooltip-proximity);
+    @include tooltip-position(left, bottom, 0, 100%, $tooltip-proximity);
   }
 
   .#{$tooltip-class}--s {
-    @include tooltip-position(left, bottom, -50%, 100%, $tooltip-background-color, $tooltip-proximity);
+    @include tooltip-position(left, bottom, -50%, 100%, $tooltip-proximity);
   }
 
   .#{$tooltip-class}--sw {
-    @include tooltip-position(right, bottom, 0, 100%, $tooltip-background-color, $tooltip-proximity);
-  }
-}
-@include tooltipFactory();
+    @include tooltip-position(right, bottom, 0, 100%, $tooltip-proximity);
+  }}
