@@ -1,0 +1,188 @@
+/*
+* SCSS Tooltips
+* By David Tintner & Hacking UI
+* http://hackingui.com/front-end/scss-tooltips/
+*
+* $direction: ne, nw, se, sw. relative to the element the tooltip is on
+* $bg-color: any CSS valid color string, will be applied as bg color of tooltip
+* Content for tooltip comes from data-tooltip attribute on element
+*/
+
+//dependencies
+@import '../bower_components/UtilityBelt/utility-belt';
+
+@mixin tooltip-position($positionX,
+                        $positionY,
+                        $translateX,
+                        $translateY,
+                        $tooltip-proximity: 3px) {
+
+  // utility variables
+  $tooltip-body: '&:before';
+  $tooltip-arrow: '&:after';
+  // config variables
+  $tooltip-triangle-height: 6px !default;
+  $tooltip-triangle-width: $tooltip-triangle-height * 2;
+
+  $positionXValue: 0;
+  $positionYValue: -($tooltip-triangle-height + $tooltip-proximity);
+  $trianglePositionXValue: 50%;
+  $trianglePositionYValue: $positionYValue;
+  $triangleDirection: down;
+
+  #{$tooltip-arrow} {
+    transform: translate3d(-50%, 0, 0);
+    @if ($positionX == 'right') {
+      transform: translate3d(50%, 0, 0);
+    }
+  }
+
+  // North direction
+  @if ($translateX == -50%) {
+    $positionXValue: 50%;
+  }
+
+  // East-West direction
+  @if ($translateY == -50%) {
+    $positionXValue: -($tooltip-triangle-height + $tooltip-proximity);
+    $positionYValue: 50%;
+    $trianglePositionXValue: -$tooltip-proximity;
+    $trianglePositionYValue: 50%;
+    $triangleDirection: left;
+    @if ($translateX == -100%) {
+      $triangleDirection: right;
+    }
+    #{$tooltip-arrow} {
+      transform: translate3d(#{$translateX}, #{$translateY}, 0);
+    }
+  }
+
+  // South direction
+  @if ($translateY == 100%) {
+    $triangleDirection: up;
+  }
+
+  $positionX-override: 'right';
+  @if ($positionX == 'right') {
+    $positionX-override: 'left';
+  }
+
+  $positionY-override: 'bottom';
+  @if ($positionY == 'bottom') {
+    $positionY-override: 'top';
+  }
+
+  #{$tooltip-body} {
+    #{$positionY}: $positionYValue;
+    #{$positionY-override}: auto;
+    #{$positionX}: $positionXValue;
+    #{$positionX-override}: auto;
+    transform: translate3d(#{$translateX}, #{$translateY}, 0);
+  }
+  #{$tooltip-arrow} {
+    @include triangle($triangleDirection, $tooltip-triangle-height, currentColor);
+    #{$positionY}: $trianglePositionYValue;
+    #{$positionY-override}: auto;
+    #{$positionX}: $trianglePositionXValue;
+    #{$positionX-override}: auto;
+  }
+}
+
+$tooltip-font-color-default : white !default;
+@mixin tooltip( $tooltip-data-attribute: 'data-tooltip',
+                $tooltip-width: 200px,
+                $tooltip-class: 'tooltip',
+                $tooltip-background-color: #0061c8,
+                $tooltip-font-color: $tooltip-font-color-default,
+                $fade-out-duration: 300ms,
+                $fade-in-delay: 300ms,
+                $tooltip-padding: 10px 15px
+) {
+  //config
+  // set the color automatically based on the tooltip background
+  @if lightness($tooltip-background-color) > 50% and not($tooltip-font-color == $tooltip-font-color-default) {
+    $tooltip-font-color: black;
+  }
+
+  position: relative; // can override this to absolute or fixed if necessary. Just can't be static
+
+  &:before, &:after {
+    opacity: 0;
+    z-index: 98;
+    transition: opacity $fade-out-duration, visibility 0ms linear $fade-out-duration; // delay visibility on fade out
+    pointer-events: none;
+    @include respondTo(smartphone) {
+      display: none; // tooltips are not yet mobile friendly, so we are just hiding them
+    }
+  }
+  &:before {
+    // tooltip body
+    content: attr(#{$tooltip-data-attribute});
+    position: absolute;
+    width: $tooltip-width;
+    padding: $tooltip-padding;
+    line-height: 18px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: normal;
+    white-space: normal;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+    background-color: $tooltip-background-color;
+    color: $tooltip-font-color;
+  }
+  &:after {
+    // tooltip carrot
+    content: '';
+    color: $tooltip-background-color; // is for border-color to inherit using currentColor value
+  }
+
+  &:hover {
+    /* putting comment here so :hover is declared first by itself to fix ie10 bug with transitions on pseudo elements
+    - http://css-tricks.com/pseudo-element-animationstransitions-bug-fixed-in-webkit/ */
+    &:before, &:after {
+      opacity: 1;
+      pointer-events: all;
+      transition-delay: $fade-in-delay;
+      @include respondTo(smartphone) {
+        display: none;
+      }
+    }
+  }
+}
+//*
+//* tooltip classes.
+//*
+
+@mixin tooltipPositioningFactory($tooltip-class: 'tooltip', $tooltip-proximity: 3px ){
+  .#{$tooltip-class}--ne {
+    @include tooltip-position(left, top, 0, -100%, $tooltip-proximity);
+  }
+
+  .#{$tooltip-class}--n {
+    @include tooltip-position(left, top, -50%, -100%, $tooltip-proximity);
+  }
+
+  .#{$tooltip-class}--nw {
+    @include tooltip-position(right, top, 0, -100%, $tooltip-proximity);
+  }
+
+  .#{$tooltip-class}--w {
+    @include tooltip-position(left, top, -100%, -50%, $tooltip-proximity);
+  }
+
+  .#{$tooltip-class}--e {
+    @include tooltip-position(right, top, 100%, -50%, $tooltip-proximity);
+  }
+
+  .#{$tooltip-class}--se {
+    @include tooltip-position(left, bottom, 0, 100%, $tooltip-proximity);
+  }
+
+  .#{$tooltip-class}--s {
+    @include tooltip-position(left, bottom, -50%, 100%, $tooltip-proximity);
+  }
+
+  .#{$tooltip-class}--sw {
+    @include tooltip-position(right, bottom, 0, 100%, $tooltip-proximity);
+  }}
