@@ -91,7 +91,6 @@
 $tooltip-font-color-default : white !default;
 @mixin tooltip( $tooltip-data-attribute: 'data-tooltip',
                 $tooltip-width: 200px,
-                $tooltip-class: 'tooltip',
                 $tooltip-background-color: #0061c8,
                 $tooltip-font-color: $tooltip-font-color-default,
                 $fade-out-duration: 300ms,
