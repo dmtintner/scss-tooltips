@@ -53,7 +53,7 @@
     $positionY: bottom;
     $translateX: -50%;
     $translateY: 100%;
-  } @else { // direction 'se'
+  } @else if $direction == 'se'{
     $positionX: left;
     $positionY: bottom;
     $translateX: 0;
