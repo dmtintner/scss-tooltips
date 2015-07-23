@@ -198,7 +198,8 @@ $tooltip-font-color-default : white !default;
 //*
 
 @mixin tooltipPositioningFactory($tooltip-class: 'tooltip') {
-  @each $direction in ne, n, nw, w, e, s, sw {
+  $directions: ne, n, nw, w, e, s, sw, se;
+  @each $direction in $directions {
     .#{$tooltip-class}--#{$direction} {
       @include tooltip-position($direction);
     }
