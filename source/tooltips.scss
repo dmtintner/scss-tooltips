@@ -11,7 +11,7 @@
 //dependencies
 @import '../bower_components/UtilityBelt/utility-belt';
 
-@mixin tooltip-position($direction: 'se') {
+@mixin tooltip-position($direction) {
 
   $positionX: "";
   $positionY: "";
