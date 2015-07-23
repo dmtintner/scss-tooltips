@@ -66,14 +66,16 @@ $tooltip-triangle-height: 6px !default;
 
 *tooltipPositioningFactory* mixin params:
 
-Distance from Element
-```
-$tooltip-proximity: 3px;
-```
 Tooltip class name
 ```
 $tooltip-class: 'tooltip';
 ```
+
+Distance from Element (not exposed as a param)
+```
+$tooltip-proximity: 5px;
+```
+
 See a Demo
 -----------
 [Demo on Hacking UI](http://hackingui.com/front-end/scss-tooltips/)
