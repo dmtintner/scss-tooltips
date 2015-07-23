@@ -9,14 +9,14 @@ How Do You Use it?
 -----------
 As seen in demo.scss you can define your class for the `tooltip` with default or overridden values as params in the *tooltip* mixin.
 Then use the *tooltipPositioningFactory* to create the positioning classes 
-Just add the class `tooltip` to the element that you want to hover over and display the tooltip.
+Just add the class `tooltip` to the element that you want to hover over and display the tooltip at the default position of south-east.
 
 Then add the data attribute `data-tooltip` to the element and provide whatever text you would like the tooltip to say inside of it.
 
 Then to position it, add one of the following classes:<br>
 `tooltip--nw` `tooltip--n` `tooltip-ne`<br>
 `tooltip--w`               `tooltip-e`<br>
-`tooltip--sw` `tooltip--s` `tooltip--se`<br>
+`tooltip--sw` `tooltip--s`<br>
 
 Example Setup
 -----------
@@ -66,14 +66,16 @@ $tooltip-triangle-height: 6px !default;
 
 *tooltipPositioningFactory* mixin params:
 
-Distance from Element
-```
-$tooltip-proximity: 3px;
-```
 Tooltip class name
 ```
 $tooltip-class: 'tooltip';
 ```
+
+Distance from Element (not exposed as a param)
+```
+$tooltip-proximity: 5px;
+```
+
 See a Demo
 -----------
 [Demo on Hacking UI](http://hackingui.com/front-end/scss-tooltips/)

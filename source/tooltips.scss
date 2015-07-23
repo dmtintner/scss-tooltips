@@ -11,16 +11,60 @@
 //dependencies
 @import '../bower_components/UtilityBelt/utility-belt';
 
-@mixin tooltip-position($positionX,
-                        $positionY,
-                        $translateX,
-                        $translateY,
-                        $tooltip-proximity: 3px) {
+@mixin tooltip-position($direction) {
 
+  $positionX: "";
+  $positionY: "";
+  $translateX: "";
+  $translateY: "";
+
+  @if $direction == 'ne' {
+    $positionX: left;
+    $positionY: top;
+    $translateX: 0;
+    $translateY: -100%;
+  } @else if $direction == 'n' {
+    $positionX: left;
+    $positionY: top;
+    $translateX: -50%;
+    $translateY: -100%;
+  } @else if $direction == 'nw' {
+    $positionX: right;
+    $positionY: top;
+    $translateX: 0;
+    $translateY: -100%;
+  } @else if $direction == 'w' {
+    $positionX: left;
+    $positionY: top;
+    $translateX: -100%;
+    $translateY: -50%;
+  } @else if $direction == 'e' {
+    $positionX: right;
+    $positionY: top;
+    $translateX: 100%;
+    $translateY: -50%;
+  } @else if $direction == 'sw' {
+    $positionX: right;
+    $positionY: bottom;
+    $translateX: 0;
+    $translateY: 100%;
+  } @else if $direction == 's' {
+    $positionX: left;
+    $positionY: bottom;
+    $translateX: -50%;
+    $translateY: 100%;
+  } @else if $direction == 'se'{
+    $positionX: left;
+    $positionY: bottom;
+    $translateX: 0;
+    $translateY: 100%;
+  }
   // utility variables
+
   $tooltip-body: '&:before';
   $tooltip-arrow: '&:after';
   // config variables
+  $tooltip-proximity: 5px;
   $tooltip-triangle-height: 6px !default;
   $tooltip-triangle-width: $tooltip-triangle-height * 2;
 
@@ -91,7 +135,6 @@
 $tooltip-font-color-default : white !default;
 @mixin tooltip( $tooltip-data-attribute: 'data-tooltip',
                 $tooltip-width: 200px,
-                $tooltip-class: 'tooltip',
                 $tooltip-background-color: #0061c8,
                 $tooltip-font-color: $tooltip-font-color-default,
                 $fade-out-duration: 300ms,
@@ -154,35 +197,11 @@ $tooltip-font-color-default : white !default;
 //* tooltip classes.
 //*
 
-@mixin tooltipPositioningFactory($tooltip-class: 'tooltip', $tooltip-proximity: 3px ){
-  .#{$tooltip-class}--ne {
-    @include tooltip-position(left, top, 0, -100%, $tooltip-proximity);
+@mixin tooltipPositioningFactory($tooltip-class: 'tooltip') {
+  $directions: ne, n, nw, w, e, s, sw, se;
+  @each $direction in $directions {
+    .#{$tooltip-class}--#{$direction} {
+      @include tooltip-position($direction);
+    }
   }
-
-  .#{$tooltip-class}--n {
-    @include tooltip-position(left, top, -50%, -100%, $tooltip-proximity);
-  }
-
-  .#{$tooltip-class}--nw {
-    @include tooltip-position(right, top, 0, -100%, $tooltip-proximity);
-  }
-
-  .#{$tooltip-class}--w {
-    @include tooltip-position(left, top, -100%, -50%, $tooltip-proximity);
-  }
-
-  .#{$tooltip-class}--e {
-    @include tooltip-position(right, top, 100%, -50%, $tooltip-proximity);
-  }
-
-  .#{$tooltip-class}--se {
-    @include tooltip-position(left, bottom, 0, 100%, $tooltip-proximity);
-  }
-
-  .#{$tooltip-class}--s {
-    @include tooltip-position(left, bottom, -50%, 100%, $tooltip-proximity);
-  }
-
-  .#{$tooltip-class}--sw {
-    @include tooltip-position(right, bottom, 0, 100%, $tooltip-proximity);
-  }}
+}

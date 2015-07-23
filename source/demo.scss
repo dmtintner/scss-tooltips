@@ -1,11 +1,11 @@
 @import "tooltips";
 //define here your values
 $tooltip-class: 'tooltip' !default;
-$tooltip-proximity: 3px !default;
 
 .#{$tooltip-class} {
   //here you can override the default parameters
-  @include tooltip($tooltip-class: $tooltip-class);
+  @include tooltip();
+  @include tooltip-position('se');
 }
 
-@include tooltipPositioningFactory($tooltip-class: $tooltip-class, $tooltip-proximity: $tooltip-proximity);
+@include tooltipPositioningFactory($tooltip-class: $tooltip-class);
