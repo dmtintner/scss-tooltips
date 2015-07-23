@@ -5,6 +5,7 @@ $tooltip-class: 'tooltip' !default;
 .#{$tooltip-class} {
   //here you can override the default parameters
   @include tooltip();
+  @include tooltip-position(); //'se' is the default
 }
 
 @include tooltipPositioningFactory($tooltip-class: $tooltip-class);

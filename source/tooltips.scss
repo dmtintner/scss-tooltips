@@ -13,10 +13,10 @@
 
 @mixin tooltip-position($direction: 'se') {
 
-  $positionX: left;
-  $positionY: bottom;
-  $translateX: 0;
-  $translateY: 100%;
+  $positionX: "";
+  $positionY: "";
+  $translateX: "";
+  $translateY: "";
 
   @if $direction == 'ne' {
     $positionX: left;
@@ -43,8 +43,8 @@
     $positionY: top;
     $translateX: 100%;
     $translateY: -50%;
-  } @else if $direction == 'se' {
-    $positionX: left;
+  } @else if $direction == 'sw' {
+    $positionX: right;
     $positionY: bottom;
     $translateX: 0;
     $translateY: 100%;
@@ -53,8 +53,8 @@
     $positionY: bottom;
     $translateX: -50%;
     $translateY: 100%;
-  } @else { // direction 'sw'
-    $positionX: right;
+  } @else { // direction 'se'
+    $positionX: left;
     $positionY: bottom;
     $translateX: 0;
     $translateY: 100%;
@@ -198,7 +198,7 @@ $tooltip-font-color-default : white !default;
 //*
 
 @mixin tooltipPositioningFactory($tooltip-class: 'tooltip') {
-  @each $direction in ne, n, nw, w, e, se, s, sw {
+  @each $direction in ne, n, nw, w, e, s, sw {
     .#{$tooltip-class}--#{$direction} {
       @include tooltip-position($direction);
     }
